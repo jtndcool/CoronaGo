@@ -1,0 +1,69 @@
+<br>
+
+  
+<br><br>
+  <button style="display:none" id="showData" class="btn btn-primary " (click)="fetchData()">Hit</button>
+
+  
+  <div id="chart"></div>
+
+
+  <div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Live Corona Status</h4> <button (click)="funcHelp();" class="btn btn-primary btn-sm" style="float: right;">Refresh</button>
+                         <p>{{date | date:'medium' }}</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary" style="text-align: center; color: black; cursor: pointer;" >
+                    
+                                    <th  scope="col">#</th>
+                                    <th (click)="sortMe('Country');"   coscope="col">Country</th>
+                                    <th (click)="sortMe('NewConfirmed');" scope="col">New Cases</th>
+                                    <th (click)="sortMe('TotalConfirmed');" scope="col">Total Confirmed</th>
+                                    <th (click)="sortMe('NewDeaths');" scope="col">New Deaths</th>
+                                    <th (click)="sortMe('TotalDeaths');" scope="col">Total Deaths</th>
+                                    <th (click)="sortMe('NewRecovered');" scope="col">New Recovered</th>
+                                    <th (click)="sortMe('TotalRecovered');" scope="col">Total Recovered</th>
+                                  
+                                </thead>
+                                <tbody  *ngIf="!countries" style="text-align: center;">
+                               
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>
+                                    <div  style="float: right; color: rgb(228, 88, 88);" class="loader"><p style="color: black
+                                    ;">Loading</p></div>
+
+                                  </td>
+                                    
+                         
+                                  
+                                   
+                                </tbody>
+                                <tbody>
+                                  <tr *ngFor="let data of countries; let i=index" style="text-align: center;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{data.Country}}</td>
+                                    <td>{{data.NewConfirmed}}</td>
+                                    <td>{{data.TotalConfirmed}}</td>
+                                    <td style="background-color:  rgb(255, 72, 72); color: white;">{{data.NewDeaths}}</td>
+                                    <td>{{data.TotalDeaths}}</td>
+                                    <td>{{data.NewRecovered}}</td>
+                                    <td style="background-color: rgb(145, 252, 145);">{{data.TotalRecovered}}</td>
+                                  </tr>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          

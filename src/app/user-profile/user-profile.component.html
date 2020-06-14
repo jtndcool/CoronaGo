@@ -1,0 +1,170 @@
+
+<br>
+<br>
+<br>
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-group mr-2" role="group" aria-label="First group">
+    <button (click)="changeView('card')" type="button" class="btn btn-secondary btn-sm">Card View</button>
+    
+  </div>
+  <div class="btn-group mr-2" role="group" aria-label="Second group">
+    <button (click)="changeView('table')" type="button" class="btn btn-secondary btn-sm">Table View</button>
+ 
+  </div>
+ 
+</div>
+<p>Click on statename to see district wise details</p>
+  <div class="row" style="display: none;" id="cards" >
+       
+    <div class="col-md-3" *ngFor="let data of stateData" style=" background-color: honeydew; margin-bottom: 3px; display: inline-block!important;">
+        <div class="card" style="width: 18rem; background-color: navajowhite;" >
+            <div class="card-body">
+              <h5 class="card-title"><p></p>{{data.state}}</h5>
+               <h6 >Confirmed {{data.confirmed}}</h6>
+              <h6  style="color:red">Deaths {{data.deaths}}</h6>
+              <h6 style="color: green;" >Recovered {{data.recovered}}</h6>
+              <p><strong>Last Updated</strong>{{data.lastupdatedtime }}</p>        
+            </div>
+          </div>
+    </div>
+</div>
+
+<div class="main-content" id="tables">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title ">Live Corona Status</h4> <button  class="btn btn-primary btn-sm" style="float: right;">Refresh</button>
+                       <p>{{date | date:'medium' }}</p>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table">
+                              <thead class=" text-primary" style="text-align: center; color: black; cursor: pointer;" >
+                  
+                                  <th  scope="col">#</th>
+                                  <th (click)="sortMe('state');" coscope="col">State</th>
+                                  <th (click)="sortMe('active');" scope="col">Active Cases</th>
+                                  <th (click)="sortMe('confirmed');" scope="col">Confirmed Cases</th>
+                                  <th (click)="sortMe('deaths');" scope="col">Deaths</th>
+                                  <th (click)="sortMe('recovered');" scope="col">Recovered</th>
+                                
+                                
+                              </thead>
+                              <tbody  *ngIf="!stateData" style="text-align: center;">
+                             <td></td>
+                             <td></td>
+                                <td></td>
+                                <div style="color: rgb(252, 124, 124);" class="loader"></div>
+                                <td></td>
+                              
+                                  
+          
+                                 
+                              </tbody>
+                              <tbody>
+                                <tr *ngFor="let data of stateData; let i=index" style="text-align: center;">
+                                  <td>{{i+1}}</td>
+                                  <td style="cursor:pointer" (click)="viewDistricts(data.state)">{{data.state}}</td>
+                                  <td>{{data.active}}</td>
+                                  <td>{{data.confirmed}}</td>
+                                  <td style="background-color:  rgb(255, 72, 72); color: white;">{{data.deaths}}</td>
+                                   <td style="background-color: rgb(145, 252, 145);">{{data.recovered}}</td>
+                               
+                                </tr>
+                                 
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <button id="showData" style="display:none" (click)="fetchData()"></button>
+
+
+
+
+
+
+
+
+   <!-- Button trigger modal -->
+<button style="display: none;" id="pressMe" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle"><strong>{{selectedState}}</strong></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="main-content" id="tables1">
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="card">
+                          <div class="card-header card-header-danger">
+                              <h4 class="card-title ">Live Corona Status Districts</h4> <button  class="btn btn-primary btn-sm" style="float: right;">Refresh</button>
+                               <p>{{date | date:'medium' }}</p>
+                          </div>
+                          <div class="card-body">
+                              <div class="table-responsive">
+                                  <table class="table">
+                                      <thead class=" text-primary" style="text-align: center; color: black; cursor: pointer;" >
+                          
+                                          <th  scope="col">#</th>
+                                          <th  coscope="col">District</th>
+                                          <th  scope="col">Active </th>
+                                          <th  scope="col">Confirmed</th>
+                                          <th scope="col">Deaths</th>
+                                          <th  scope="col">Recovered</th>
+                                        
+                                       
+                                      </thead>
+                                      <tbody  *ngIf="!dist" style="text-align: center;">
+                                     <td></td>
+                                     <td></td>
+                                        <td></td>
+                                        <div style="color: rgb(252, 124, 124);" class="loader"></div>
+                                        <td></td>
+                                      
+                                          
+                  
+                                         
+                                      </tbody>
+                                      <tbody>
+                                        <tr  *ngFor="let item of dist | keyvalue; let i=index;">
+                                          <td>{{i+1}}</td>
+                                          <td> {{item.key}}</td>
+                                          <td>{{item.value.active}}</td>
+                                          <td>{{item.value.confirmed}}</td>
+                                          <td style=" background-color: rgb(255, 137, 137);">{{item.value.deceased}}</td>
+                                          <td style="background-color: rgb(125, 255, 125);">{{item.value.recovered}}</td>
+                                        
+                                        </tr>
+                                         
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
