@@ -1,2 +1,2 @@
 # CoronaGo
-A simple dashboard for viewing corona cases all over world
+A simple dashboard in Angular for viewing corona cases all over world
